@@ -7,6 +7,9 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.thymeleaf.templateresolver.TemplateResolver;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Configuration
 @EnableWebMvc
 public class WebAppConfig extends WebMvcConfigurerAdapter {
@@ -19,7 +22,11 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
     @Bean
     public TemplateResolver httpTemplateResolver() {
         TemplateResolver templateResolver = new TemplateResolver();
-        templateResolver.setPrefix("http://localhost:63342/thymeleaf-aggregator-poc/src/main/resources/cms/");
+        Set<String> patterns = new HashSet<>();
+        patterns.add("cms/*");
+
+        templateResolver.setResolvablePatterns(patterns);
+        templateResolver.setPrefix("http://localhost:63342/thymeleaf-aggregator-poc/src/main/resources/");
         templateResolver.setOrder(1);
         templateResolver.setSuffix(".html");
         templateResolver.setCharacterEncoding("UTF-8");
